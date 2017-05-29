@@ -9,7 +9,7 @@ public class View {
     private JFrame frame;
     private JLabel label;
     private JButton button;
-    private JButton MCMprint;
+    private JButton MCMprintButton;
     
     public View(String text){
         frame = new JFrame("View");                                    
@@ -25,8 +25,8 @@ public class View {
         button = new JButton("Button");        
         frame.getContentPane().add(button, BorderLayout.SOUTH);    
         
-        MCMprint = new JButton("MCM Print");        
-        frame.getContentPane().add(MCMprint, BorderLayout.NORTH);    
+        MCMprintButton = new JButton("MCM Print");        
+        frame.getContentPane().add(MCMprintButton, BorderLayout.NORTH);    
         
         
         
@@ -35,6 +35,11 @@ public class View {
     public JButton getButton(){
         return button;
     }
+    
+    public JButton getMCMprintButton(){
+        return MCMprintButton;
+    }
+    
     
     public void setText(String text){
         label.setText(text);

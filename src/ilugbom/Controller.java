@@ -36,7 +36,7 @@ public class Controller {
                   printMCM();
               }
         };                
-        view.getButton().addActionListener(printMCMbuttonListner);
+        view.getMCMprintButton().addActionListener(printMCMbuttonListner);
         
         
         
@@ -51,8 +51,11 @@ public class Controller {
     }
     
     private void printMCM()
-    {   
-        
+    {   System.out.println("tt");
+    	SetPrinter ps=new SetPrinter();
+        String pn=ps.SelectPrinter();
+        MCMprint mcmp = new MCMprint();
+        mcmp.PrintAllMarklists(pn);
     }
     
     
