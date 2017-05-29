@@ -7,6 +7,7 @@ import javax.print.attribute.standard.MediaPrintableArea;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
@@ -23,10 +24,21 @@ import java.util.ArrayList;
 public class MCMprint implements Printable
 {	
 	public  ArrayList<String> fileArray = new ArrayList<String>();
-	public  ArrayList<String> strArray = new ArrayList<String>();
-	public  ArrayList<String> rollArray = new ArrayList<String>();
-	public  ArrayList<String> markArray = new ArrayList<String>();
 	
+	private String   MCMYEAR;
+	 int linespacing=15;
+	  Font LS15=new Font("Liberation Serif", Font.PLAIN, 15);
+	  Font LS8=new Font("Liberation Serif", Font.PLAIN, 8);
+	  private String[] NoticeDate;//=new String[12];
+	  private String[] MeetingDate;//=new String[12];
+	  private String[] Agenda;//=new String[12];
+	  private String[] Minute;//=new String[12];
+	  private String[] Signatures;//=new String[12];
+	 
+	
+	  private String SocietyName="ADITYA PARK BLDG. NO. 4 CO-OP. HOUSING SOCIETY LTD";
+	  private String SocietyRegNo="{ Regd. # MUM/W-T/HSG/T.C.-9309/ Dt. 01/10/2007 }";
+
 	
 	
 	int TotalMarklists=0;
@@ -56,7 +68,130 @@ public class MCMprint implements Printable
 	
 	  public void show(String msg) ///for debugging
 		{JOptionPane.showMessageDialog(null, msg);}
+	  
+	  
+	  public void PrintFormattedPara(String para,int topleftx,int toplefty,int width,Font font,Graphics gr)
+		{  	FontMetrics metrics = gr.getFontMetrics(font);
+		    int defaultspacing=3;
+		  	String[] result = para.split("\\s");
+		  	int totalwords=result.length;
+		  	//int NonSpaceExtent=0;
+		  	ArrayList<String> line = new ArrayList<String>();
+		 // 	mylist.add(mystring); //this adds an element to the list.
+		    int extent=0;
+		    String templine="";
+		  	for (int x=0; x<totalwords; x++)
+		  	    { extent = extent + metrics.stringWidth(result[x]);
+		  	      if(extent>width) { line.add(templine); templine=result[x] + ' '; extent=0; continue;}
+		  	      if((extent+defaultspacing)>width) { line.add(templine); templine=result[x]+' '; extent=0; continue;}
+		  	      templine=templine+result[x]+' ';
+		  	      extent=extent+defaultspacing;
+		  	    }
+		  	line.add(templine);
+		  	int LineTotal=line.size();
+		  	
+		  	int linespacing=15;
+		  	for(int i=0;i<LineTotal-1;i++)
+		  	    { String tempstr=line.get(i);
+		  	      tempstr.trim();
+		  	      PrintPara(tempstr,topleftx,toplefty,width,font,gr);
+		  	      toplefty=toplefty+linespacing;
+		  	    }
+		    gr.drawString(line.get(LineTotal-1),topleftx,toplefty);
+		}  
+
+
+public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font font,Graphics gr)
+{   
+    //int defaultspacing=14;   ////default word spacing
+	FontMetrics metrics = gr.getFontMetrics(font);
+  	String[] result = oneline.split("\\s");
+  	int totalwords=result.length;
+  	int NonSpaceExtent=0;
+   for (int x=0; x<totalwords; x++)
+          NonSpaceExtent=NonSpaceExtent+ metrics.stringWidth(result[x]);
+    int spaceleft=width-NonSpaceExtent;
+    int averagegap=spaceleft/(totalwords-1);
+    int remainingpixels=spaceleft%(totalwords-1);
+    
+    
+    for (int x=0; x<totalwords; x++)
+   	   { gr.drawString(result[x],topleftx,toplefty);
+   	     topleftx=topleftx+metrics.stringWidth(result[x])+averagegap;
+   	     if(remainingpixels>0) { topleftx++; remainingpixels--; }
+   	   }
+    
+}
+
+	  
+	  
+	  
+	  public void PrintHeader(Graphics gr,int month)
+		{ int x=70,y=70;
+		  gr.setFont(LS15);
+		  Centre(SocietyName,470,x,y,gr);
+		  gr.setFont(LS8);
+		  y=y+linespacing;
+		  Centre(SocietyRegNo,470,x,y,gr);
+		  y=y+linespacing;
+		  gr.drawString("YEAR : "+MCMYEAR, x+424, y-4);
+		  gr.drawLine(x,y,x+470,y);
+		  y=y+linespacing-4;
+		  String tt=String.format("Ref. No : %02d-MCMND-%s",month+1,NoticeDate[month]);
+		  gr.drawString(tt,x,y);
+		  gr.drawString("Date : "+NoticeDate[month],x+421,y);
+		  y=y+linespacing;y=y+linespacing;
+		  Centre("NOTICE OF THE MANAGING COMMITTEE MEETING",470,x,y,gr);
+		  y=y+linespacing;y=y+linespacing;
+
+	String para="It is to inform to all the members of the "; 
+	para+=SocietyName;
+	para+=" that the Managing Committee Meeting of the ";
+	para+=SocietyName;
+	para+=" shall be held on ";
+	para+=MeetingDate[month];
+	para+=" at ";
+	para+="9.00 p.m.";                  ///MeetingTime[1];
+	para+=" ";
+	para+="at Society premises/office, to transact the business as per following agenda.";
+		   
+	PrintFormattedPara(para,x,y,470,LS8,gr);
+		   y=y+linespacing;y=y+linespacing;y=y+linespacing;y=y+linespacing;
+		 //  gr.drawString"(iterator, x, y)All are requested to attend the meeting punctually.
+		   Centre("AGENDA",470,x,y,gr);
+		   y=y+linespacing;y=y+linespacing;
+		    String line="1]  To read and confirm the minutes of the last Managing Committee Meeting held on ";
+		   if(month>0) line+=MeetingDate[month-1]; else line+=" ____/____/___";
+		   line+=".";
+		   gr.drawString(line,x,y);
+		   y=y+linespacing;
+		  
+		   gr.drawString("2]  To approve the expenses incurred till last managing committee meeting.", x, y);
+		   
+		   y=y+linespacing;y=y+linespacing;
+		   Centre("-----x-----",470,x,y,gr);
+		   y=y+linespacing;y=y+linespacing;
+		   Centre("MINUTES OF THE MANAGING COMMITTEE MEETING",470,x,y,gr);
+		   y=y+linespacing;y=y+linespacing;
+		   line="1]  Minutes of the last Managing Committee Meeting held on ";
+		   if(month>0) line+=MeetingDate[month-1]; else line+=" ____/___/___";
+		   line+="  were read out, approved & confirmed by all without any changes";
+		   gr.drawString(line,x,y);
+		   y=y+linespacing;
+		   gr.drawString("2]  The expenses incurred in the last month have been discussed and the same have been approved.",x,y);
+		   
+		   PrintSignatories(month,gr);
+		}
+
 	    
+	  private void PrintSignatories(int month,Graphics gr)
+		{
+		  String[] Part = Signatures[month].split("#");
+		  gr.drawString(Part[1],70, 700);
+		  gr.drawString("(Secretary)",70,715);
+		  gr.drawString("Other Members :",70,730);
+		}
+	  
 	
     public void printSelected(ArrayList <String> Array)
     {
@@ -88,31 +223,6 @@ public class MCMprint implements Printable
   	    return TotalMarklists;
     }
  	
-	
-	public  void ReadFromDisk(String fnem)
-    {   strArray.removeAll(strArray);
-    	BufferedReader reader=null;
-		try {
-			reader = new BufferedReader(new FileReader(fnem));
-		} catch (FileNotFoundException e1) 
-		{
-		
-			e1.printStackTrace();
-		}
- 				
-		String line = null;
-    	try { while ((line = reader.readLine()) != null) 
-			{
-			 
-			 strArray.add(line);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-     }
-	
 	
 	
 	///// Here the whole  JAVA Printing Mechanism Starts 
@@ -235,125 +345,57 @@ public class MCMprint implements Printable
 	    	  }
 	    }
 
-	void Fillrollmarks()  ///fill roll and marks in separate rollArray and markArray 
-	                      /// Also fill appropriate Header Fields 
-	{   rollArray.removeAll(rollArray);
-	    markArray.removeAll(markArray);
-		CollegeName1=strArray.get(1);    // System.out.println(CollegeName1);
-    	CollegeName2=strArray.get(2);
-    	CollegeName3=strArray.get(3);
-    	String temp[],stemp;
-    	stemp=strArray.get(7);
-    	temp=stemp.split(":");
-    	
-    	TotalSets=Integer.parseInt(temp[1].replaceAll("[^0-9.]",""));
-    	
-        for(int i=0;i<TotalSets;i++) 
-        {   stemp=strArray.get(9+3*i);temp=stemp.split(":");
-        	Set[i]=temp[1].trim();
-        	stemp=strArray.get(9+3*i+1);temp=stemp.split(":");
-        	Key[i]=temp[1].trim();
-        }
-        //show(Set[CurSet]);
-        stemp=strArray.get(11+3*TotalSets); temp=stemp.split(":");
-    	FirstRoll=temp[1].trim();
-    
-    	stemp=strArray.get(12+3*TotalSets); temp=stemp.split(":");
-    	LastRoll=temp[1].trim();
-    	stemp=strArray.get(13+3*TotalSets); temp=stemp.split(":");
-    	Examiner=temp[1].trim();
-    	stemp=strArray.get(14+3*TotalSets); temp=stemp.split(":");
-    	Clas=temp[1].trim();
-    	stemp=strArray.get(15+3*TotalSets); temp=stemp.split(":");
-    	Division=temp[1].trim();
-    	stemp=strArray.get(16+3*TotalSets); temp=stemp.split(":");
-    	Stream=temp[1].trim();
-    	stemp=strArray.get(17+3*TotalSets); temp=stemp.split(":");
-    	Subject=temp[1].trim();
-    	stemp=strArray.get(18+3*TotalSets); temp=stemp.split(":");
-    	Examination=temp[1].trim();
-    	stemp=strArray.get(19+3*TotalSets); temp=stemp.split(":");
-    	MaxMarks=temp[1].trim();
-    	stemp=strArray.get(20+3*TotalSets); temp=stemp.split(":");
-    	Date=temp[1].trim();
-
-		for(int i=28+3*TotalSets;i<strArray.size();i++) 
-		{
-		stemp=strArray.get(i); temp=stemp.split(":");
-    	rollArray.add(temp[0].trim());markArray.add(temp[1].trim());
 		
-		}
-	}
-	
-	
 	public void PrintGrid(int px,int py, int height, int width,int rows,int cols,Graphics gr)
 	 {  
 		
 		
-		 int rc=rollArray.size();
+		
 		 
 	     int cc=2;  
-	     int Sections=rc/40;
-	     int remainder=rc%40;
-	     if(remainder>0)Sections++;
 	     
-	     //if(cc==4) Sections=4;
-	     int RollsPerSection=40;
-	     
-	     int Gap=5; 
-	     int MrkCellWidth=30;
-	     //int celltextshiftx=5,
-	     int celltextshifty=11;
-		 int rollindex=0;
-		 String tempmark1="";
-		 long pagetotal=0;
-	     int tempc=0;
-	     for(int s=0;s<Sections;s++)
-	     {int shift=(width+MrkCellWidth*(cc-1)+Gap)*s;
-	       ///col title
-	          int i=0,j=0;
-	         gr.drawRect(px+shift,py+i*height,width, height);
-	         Centre("ROLL",width,px+shift,py+i*height+celltextshifty,gr);
-	         for(j=0;j<cc-1;j++)
-	         {
-	        	 gr.drawRect(px+width+j*MrkCellWidth+shift,py+i*height,MrkCellWidth, height);
-	        	// String str3=(Subject.length()>3 ? Subject.substring(0,3):Subject);
-	        	 
-	             Centre("MRK",MrkCellWidth,px+width+j*MrkCellWidth+shift,py+i*height+celltextshifty,gr);
-	         }
-		     for(i=1;i<=RollsPerSection;i++)
-		      {  
-			     gr.drawRect(px+shift,py+i*height,width, height);
-			     if(rollindex<rc) { String temproll=rollArray.get(rollindex);
-			     					
-			                        Centre(temproll,width,px+shift,py+i*height+celltextshifty,gr);
-			                        
-			     				  }
-		         for(j=0;j<cc-1;j++)
-		         {  if(rollindex<rc){	 tempmark1=markArray.get(rollindex);
-		                             Centre(tempmark1,MrkCellWidth,px+width+j*MrkCellWidth+shift,py+i*height+celltextshifty,gr);
-		         				}
-		         /* String tempmark2=(String) GetData(table,rollindex,2);
-		          String tempmark3=(String) GetData(table,rollindex,3);
-		         */
-		    	 gr.drawRect(px+width+j*MrkCellWidth+shift,py+i*height,MrkCellWidth, height);
-		    	 
-		         }
-		         tempc=atoi(tempmark1);
-		    	 pagetotal=pagetotal+tempc;
-		     rollindex++;
-		   }
-		     
-
-	     }
-	     String pt=String.format("Page Total : %d", pagetotal);
-	     gr.drawString(pt,px, py+680);
+	    
+	    // String pt=String.format("Page Total : %d", pagetotal);
+	    // gr.drawString(pt,px, py+680);
 	     RightJustify("Examiner's Sign : ____________",px+492, py+680,gr);
 	     
 	 }
 	    
-	 
 	
+/*
+	
+	public  void ReadFromDisk(String fnem)
+    {   strArray.removeAll(strArray);
+    	BufferedReader reader=null;
+		try {
+			reader = new BufferedReader(new FileReader(fnem));
+		} catch (FileNotFoundException e1) 
+		{
+		
+			e1.printStackTrace();
+		}
+ 				
+		String line = null;
+    	try { while ((line = reader.readLine()) != null) 
+			{
+			 
+			 strArray.add(line);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+     }
+	
+	
+	
+	
+	
+	
+	
+	
+	*/
 	
 	
 	
