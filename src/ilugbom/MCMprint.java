@@ -19,21 +19,24 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MCMprint implements Printable
 {	
 	public  ArrayList<String> fileArray = new ArrayList<String>();
 	
-	private String   MCMYEAR;
+	private String   MCMYEAR="16-17";
 	 int linespacing=15;
 	  Font LS15=new Font("Liberation Serif", Font.PLAIN, 15);
 	  Font LS8=new Font("Liberation Serif", Font.PLAIN, 8);
-	  private String[] NoticeDate;//=new String[12];
-	  private String[] MeetingDate;//=new String[12];
-	  private String[] Agenda;//=new String[12];
-	  private String[] Minute;//=new String[12];
-	  private String[] Signatures;//=new String[12];
+	  private String[] NoticeDate=new String[12];
+	  private String[] MeetingDate=new String[12];
+	  private String[] Agenda=new String[12];
+	  private String[] Minute=new String[12];
+	  private String[] Signatures=new String[12];
 	 
 	
 	  private String SocietyName="ADITYA PARK BLDG. NO. 4 CO-OP. HOUSING SOCIETY LTD";
@@ -41,33 +44,62 @@ public class MCMprint implements Printable
 
 	
 	
-	int TotalMarklists=0;
-	int CurrentMarklist=0;
-	String CollegeName1;
-	String CollegeName2;
-	String CollegeName3;
-    String Clas;
-	String Division;// = new String[TL];
-	String Stream;// = new String[TL];
-	String Subject;// = new String[TL];
-	String Examination;// = new String[TL];
-	String Examiner;
-	String MaxMarks;// = new String[TL];
-	String Date;// = new String[TL];
-	String FilePath;//= new String[TL];
-	String FileTitle;// = new String[TL];
-	int TotalSets;
-	
-	boolean bModified;
-	boolean bSaveDirect;
-	boolean bFileLoaded;
-	String FirstRoll;
-	String LastRoll;
-	String[] Set = new String[100];
-	String[] Key = new String[100];
-	
 	  public void show(String msg) ///for debugging
 		{JOptionPane.showMessageDialog(null, msg);}
+	
+	  
+	  
+	  public  String IncrementDate(String det,int NofDays,int NofMonths,int NofYears) //Format dd/MM/yy
+		 {
+			    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+				 Calendar c = Calendar.getInstance();
+				 try {
+					c.setTime(sdf.parse(det));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				 c.add(Calendar.DATE, NofDays);  // number of days to add
+				 c.add(Calendar.MONTH, NofMonths);  // number of days to add
+				 c.add(Calendar.YEAR, NofYears);  // number of days to add
+				 det = sdf.format(c.getTime());  // dt is now the new date
+				 return det;
+		}
+		
+
+		public void CreateYearPack(String det)
+		{
+			String yy=det.substring(6);
+			
+			String zz=IncrementDate(det,0,0,1);
+			show(zz);
+			
+		  MCMYEAR=yy+"-"+zz.substring(6);
+		  show(MCMYEAR);
+		 // YearLabel.setText("Year : "+MCMYEAR);
+	    	
+		NoticeDate[0]="04/04/"+yy;
+	    for(int i=1;i<12;i++) NoticeDate[i]=IncrementDate(NoticeDate[i-1],0,1,0);
+	    for(int i=0;i<12;i++) MeetingDate[i]=IncrementDate(NoticeDate[i],8,0,0);
+	    for(int i=0;i<12;i++) Signatures[i]="Mr. Pramod Dhyani#Mr.Mr. Jayesh Kelkar#Mr. Dharmesh Panchal#Mr. Kamlesh Patil#Mr. Milind Oka";
+	    
+	  //  NoticeDateField.setText(NoticeDate[MonthIndex]);
+	  //  MeetingDateField.setText(MeetingDate[MonthIndex]);
+	    
+	 //  GiveSrNos();
+	    
+	    for(int i=0;i<12;i++) 
+	    	{String LastMeetingDate="____/___/___";
+	    	 if(i>0) LastMeetingDate=MeetingDate[i-1];
+	    	 Agenda[i]="##########";   	 Minute[i]="###########";
+	    	}
+			
+	  //  UpdateFromBase();
+		}
+
+	  
+	  
+	  
 	  
 	  
 	  public void PrintFormattedPara(String para,int topleftx,int toplefty,int width,Font font,Graphics gr)
@@ -143,7 +175,7 @@ public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font fo
 		  y=y+linespacing;y=y+linespacing;
 		  Centre("NOTICE OF THE MANAGING COMMITTEE MEETING",470,x,y,gr);
 		  y=y+linespacing;y=y+linespacing;
-
+/*
 	String para="It is to inform to all the members of the "; 
 	para+=SocietyName;
 	para+=" that the Managing Committee Meeting of the ";
@@ -180,7 +212,11 @@ public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font fo
 		   y=y+linespacing;
 		   gr.drawString("2]  The expenses incurred in the last month have been discussed and the same have been approved.",x,y);
 		   
+	
+		   
 		   PrintSignatories(month,gr);
+		*/
+		
 		}
 
 	    
@@ -193,54 +229,23 @@ public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font fo
 		}
 	  
 	
-    public void printSelected(ArrayList <String> Array)
-    {
-    	 for(int x = 0; x <Array.size() ; x++) show(Array.get(x));
-    }
-	
-	int listfiles(String path)
-    { 
-  	  FilenameFilter mrkFilter = new FilenameFilter() {
-			public boolean accept(File dir, String name) {
-				String lowercaseName = name.toLowerCase();
-				if (lowercaseName.endsWith(".mrk")) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-		};
-  	  
-  	  fileArray.removeAll(fileArray);
-  	  File folder = new File(path);
-  	  File[] listOfFiles = folder.listFiles(mrkFilter);
-  	      for (int i = 0; i < listOfFiles.length; i++) {
-  	        if (listOfFiles[i].isFile()) 
-  	        {  fileArray.add(listOfFiles[i].getAbsolutePath());
-  	         } 
-  	      }
-  	    TotalMarklists=fileArray.size();
-  	    return TotalMarklists;
-    }
- 	
-	
 	
 	///// Here the whole  JAVA Printing Mechanism Starts 
 	/////  Note 'implements Printable above', It includes the Print Mechanism to our Program
 	/////
 	  public void PrintAllMarklists(String printername)
               {
+		
+		  String det = new SimpleDateFormat("dd/MM/yy").format(Calendar.getInstance().getTime());
+			show(det);
+		  CreateYearPack(det);
 		  
-		  TotalMarklists=fileArray.size();
+		  
+		  
+		  
 		  PrintService ps = findPrintService(printername);
 		  if(ps==null) ps = PrintServiceLookup.lookupDefaultPrintService(); 
 		  if(ps==null) return;
-		   
-		   if(TotalMarklists==0)
-		    CurrentMarklist=0;
-		   	  
-	        	  
-		  
 		  
 	         PrinterJob job = PrinterJob.getPrinterJob();
 	         try {
@@ -268,17 +273,6 @@ public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font fo
 	          
               
 	         }
-	
-	  public void PrintHeader(Graphics pg,int px,int py)
-	  {Centre(CollegeName1,450,px,py,pg);
-	  pg.drawString("Class & Div : "+Clas+" "+Division,px, py+17);
-	  pg.drawString("Subject :"+Subject,px+200, py+17);
-	  pg.drawString("Examiner : "+(Examiner.length()>9 ? Examiner.substring(0, 8) : Examiner),px+400,py+17);
-      pg.drawString("Examination : "+Examination,px, py+34);
-      pg.drawString("Total Marks : "+MaxMarks,px+200,py+34);
-      pg.drawString("Date : "+Date,px+400, py+34);
-		  
-	  }
 	  
 	  
 	public int print(Graphics pg, PageFormat pf, int pageno)
@@ -294,8 +288,8 @@ public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font fo
 		 Font MyFont = new Font("Liberation Serif", Font.PLAIN,10);
 		 pg.setFont(MyFont); 
          
-		 
-		 pg.drawString("Hello",200, 200);
+		 PrintHeader(pg,pageno);
+		 //pg.drawString("Hello",200, 200);
          
 		return PAGE_EXISTS;
 	 }
@@ -349,12 +343,6 @@ public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font fo
 	public void PrintGrid(int px,int py, int height, int width,int rows,int cols,Graphics gr)
 	 {  
 		
-		
-		
-		 
-	     int cc=2;  
-	     
-	    
 	    // String pt=String.format("Page Total : %d", pagetotal);
 	    // gr.drawString(pt,px, py+680);
 	     RightJustify("Examiner's Sign : ____________",px+492, py+680,gr);

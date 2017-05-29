@@ -51,7 +51,7 @@ public class Controller {
     }
     
     private void printMCM()
-    {   System.out.println("tt");
+    {  // System.out.println("tt");
     	SetPrinter ps=new SetPrinter();
         String pn=ps.SelectPrinter();
         MCMprint mcmp = new MCMprint();
