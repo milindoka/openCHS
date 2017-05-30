@@ -30,6 +30,7 @@ public class MCMprint implements Printable
 	
 	private String   MCMYEAR="16-17";
 	 int linespacing=15;
+	  String LastYearMeetingDate;
 	  Font LS15=new Font("Liberation Serif", Font.PLAIN, 15);
 	  Font LS8=new Font("Liberation Serif", Font.PLAIN, 8);
 	  private String[] NoticeDate=new String[12];
@@ -91,8 +92,9 @@ public class MCMprint implements Printable
 	    
 	 //  GiveSrNos();
 	    
+	    LastYearMeetingDate="12/03/"+zz.substring(6);
 	    for(int i=0;i<12;i++) 
-	    	{String LastMeetingDate="____/___/___";
+	    	{ String LastMeetingDate="";
 	    	 if(i>0) LastMeetingDate=MeetingDate[i-1];
 	    	 Agenda[i]="##########";   	 Minute[i]="###########";
 	    	}
@@ -191,12 +193,12 @@ public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font fo
 	para+="at Society premises/office, to transact the business as per following agenda.";
 	   
 	PrintFormattedPara(para,x,y,470,LS8,gr);
-	/*	   y=y+linespacing;y=y+linespacing;y=y+linespacing;y=y+linespacing;
+		   y=y+linespacing;y=y+linespacing;y=y+linespacing;y=y+linespacing;
 		 //  gr.drawString"(iterator, x, y)All are requested to attend the meeting punctually.
 		   Centre("AGENDA",470,x,y,gr);
 		   y=y+linespacing;y=y+linespacing;
 		    String line="1]  To read and confirm the minutes of the last Managing Committee Meeting held on ";
-		   if(month>0) line+=MeetingDate[month-1]; else line+=" ____/____/___";
+		   if(month>0) line+=MeetingDate[month-1];  else line+=LastYearMeetingDate;
 		   line+=".";
 		   gr.drawString(line,x,y);
 		   y=y+linespacing;
@@ -209,7 +211,7 @@ public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font fo
 		   Centre("MINUTES OF THE MANAGING COMMITTEE MEETING",470,x,y,gr);
 		   y=y+linespacing;y=y+linespacing;
 		   line="1]  Minutes of the last Managing Committee Meeting held on ";
-		   if(month>0) line+=MeetingDate[month-1]; else line+=" ____/___/___";
+		   if(month>0) line+=MeetingDate[month-1]; else line+=LastYearMeetingDate;
 		   line+="  were read out, approved & confirmed by all without any changes";
 		   gr.drawString(line,x,y);
 		   y=y+linespacing;
@@ -217,8 +219,8 @@ public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font fo
 		   
 	
 		   
-		   PrintSignatories(month,gr);
-		*/
+          PrintSignatories(month,gr);
+
 		
 		}
 
@@ -278,7 +280,7 @@ public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font fo
 	{
 		
 		
-		 if (pageno>4)             // We have only one page, and 'page no' is zero-based
+		 if (pageno>11)             // We have only one page, and 'page no' is zero-based
 		    {  return NO_SUCH_PAGE;  // After NO_SUCH_PAGE, printer will stop printing.
 	        }
 		 
