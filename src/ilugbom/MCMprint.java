@@ -32,7 +32,7 @@ public class MCMprint implements Printable
 	 int linespacing=15;
 	  String LastYearMeetingDate;
 	  Font LS15=new Font("Liberation Serif", Font.PLAIN, 15);
-	  Font LS8=new Font("Liberation Serif", Font.PLAIN, 8);
+	  Font LS10=new Font("Liberation Serif", Font.PLAIN,10);
 	  private String[] NoticeDate=new String[12];
 	  private String[] MeetingDate=new String[12];
 	  private String[] Agenda=new String[12];
@@ -85,7 +85,7 @@ public class MCMprint implements Printable
 		NoticeDate[0]="04/04/"+zz.substring(6);
 	    for(int i=1;i<12;i++) NoticeDate[i]=IncrementDate(NoticeDate[i-1],0,1,0);
 	    for(int i=0;i<12;i++) MeetingDate[i]=IncrementDate(NoticeDate[i],8,0,0);
-	    for(int i=0;i<12;i++) Signatures[i]="Mr. Pramod Dhyani#Mr.Mr. Jayesh Kelkar#Mr. Dharmesh Panchal#Mr. Kamlesh Patil#Mr. Milind Oka";
+	    for(int i=0;i<12;i++) Signatures[i]="Mr. Pramod Dhyani#Mr. Jayesh Kelkar#Mr. Dharmesh Panchal#Mr. Kamlesh Patil#Mr. Milind Oka";
 	    
 	  //  NoticeDateField.setText(NoticeDate[MonthIndex]);
 	  //  MeetingDateField.setText(MeetingDate[MonthIndex]);
@@ -167,7 +167,7 @@ public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font fo
 		{ int x=70,y=70;
 		  gr.setFont(LS15);
 		  Centre(SocietyName,470,x,y,gr);
-		  gr.setFont(LS8);
+		  gr.setFont(LS10);
 		  y=y+linespacing;
 		  Centre(SocietyRegNo,470,x,y,gr);
 		  y=y+linespacing;
@@ -192,7 +192,7 @@ public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font fo
 	para+=" ";
 	para+="at Society premises/office, to transact the business as per following agenda.";
 	   
-	PrintFormattedPara(para,x,y,470,LS8,gr);
+	PrintFormattedPara(para,x,y,470,LS10,gr);
 		   y=y+linespacing;y=y+linespacing;y=y+linespacing;y=y+linespacing;
 		 //  gr.drawString"(iterator, x, y)All are requested to attend the meeting punctually.
 		   Centre("AGENDA",470,x,y,gr);
@@ -212,7 +212,11 @@ public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font fo
 		   y=y+linespacing;y=y+linespacing;
 		   line="1]  Minutes of the last Managing Committee Meeting held on ";
 		   if(month>0) line+=MeetingDate[month-1]; else line+=LastYearMeetingDate;
-		   line+="  were read out, approved & confirmed by all without any changes";
+		   line+="  were read out, approved & confirmed by all";
+		   y=y+linespacing;
+		   gr.drawString(line,x,y);
+		   line="     without any changes";
+		   y=y+linespacing;
 		   gr.drawString(line,x,y);
 		   y=y+linespacing;
 		   gr.drawString("2]  The expenses incurred in the last month have been discussed and the same have been approved.",x,y);
