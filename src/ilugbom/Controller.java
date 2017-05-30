@@ -53,9 +53,10 @@ public class Controller {
     private void printMCM()
     {  // System.out.println("tt");
     	SetPrinter ps=new SetPrinter();
-        String pn=ps.SelectPrinter();
+        ps.LoadPreferences();
+        if(ps.PrinterName.length()==0) ps.SelectPrinter();
         MCMprint mcmp = new MCMprint();
-        mcmp.PrintAllMarklists(pn);
+        mcmp.PrintAllMarklists(ps.PrinterName);
     }
     
     

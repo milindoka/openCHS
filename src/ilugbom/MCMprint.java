@@ -66,19 +66,22 @@ public class MCMprint implements Printable
 				 return det;
 		}
 		
+	  
+	  
 
 		public void CreateYearPack(String det)
 		{
+			
+			
 			String yy=det.substring(6);
 			
-			String zz=IncrementDate(det,0,0,1);
-			show(zz);
+			String zz=IncrementDate(det,0,0,-1);
+		//	show(zz);
 			
-		  MCMYEAR=yy+"-"+zz.substring(6);
-		  show(MCMYEAR);
-		 // YearLabel.setText("Year : "+MCMYEAR);
-	    	
-		NoticeDate[0]="04/04/"+yy;
+		  MCMYEAR=zz.substring(6)+"-"+yy;
+		
+		  
+		NoticeDate[0]="04/04/"+zz.substring(6);
 	    for(int i=1;i<12;i++) NoticeDate[i]=IncrementDate(NoticeDate[i-1],0,1,0);
 	    for(int i=0;i<12;i++) MeetingDate[i]=IncrementDate(NoticeDate[i],8,0,0);
 	    for(int i=0;i<12;i++) Signatures[i]="Mr. Pramod Dhyani#Mr.Mr. Jayesh Kelkar#Mr. Dharmesh Panchal#Mr. Kamlesh Patil#Mr. Milind Oka";
@@ -175,7 +178,7 @@ public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font fo
 		  y=y+linespacing;y=y+linespacing;
 		  Centre("NOTICE OF THE MANAGING COMMITTEE MEETING",470,x,y,gr);
 		  y=y+linespacing;y=y+linespacing;
-/*
+
 	String para="It is to inform to all the members of the "; 
 	para+=SocietyName;
 	para+=" that the Managing Committee Meeting of the ";
@@ -186,9 +189,9 @@ public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font fo
 	para+="9.00 p.m.";                  ///MeetingTime[1];
 	para+=" ";
 	para+="at Society premises/office, to transact the business as per following agenda.";
-		   
+	   
 	PrintFormattedPara(para,x,y,470,LS8,gr);
-		   y=y+linespacing;y=y+linespacing;y=y+linespacing;y=y+linespacing;
+	/*	   y=y+linespacing;y=y+linespacing;y=y+linespacing;y=y+linespacing;
 		 //  gr.drawString"(iterator, x, y)All are requested to attend the meeting punctually.
 		   Centre("AGENDA",470,x,y,gr);
 		   y=y+linespacing;y=y+linespacing;
@@ -237,12 +240,7 @@ public void PrintPara(String oneline,int topleftx,int toplefty,int width,Font fo
               {
 		
 		  String det = new SimpleDateFormat("dd/MM/yy").format(Calendar.getInstance().getTime());
-			show(det);
 		  CreateYearPack(det);
-		  
-		  
-		  
-		  
 		  PrintService ps = findPrintService(printername);
 		  if(ps==null) ps = PrintServiceLookup.lookupDefaultPrintService(); 
 		  if(ps==null) return;
