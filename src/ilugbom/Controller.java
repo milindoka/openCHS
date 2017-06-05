@@ -2,16 +2,19 @@ package ilugbom;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class Controller {
 
     private Model model;
     private View view;
-    private ActionListener actionListener,printMCMbuttonListner;
+    private AgendaMinutesDialog amd;
+    private ActionListener EditAgendaButtonListner,printMCMbuttonListner;
     
     public Controller(Model model, View view){
         this.model = model;
         this.view = view;
        // String path;
+        amd = new AgendaMinutesDialog();
      
 	     System.out.println(model.getJarPath()); ///set JAR path in model variable path;
 
@@ -20,13 +23,14 @@ public class Controller {
     
     public void contol()
     {        
-        actionListener = new ActionListener()
+        EditAgendaButtonListner = new ActionListener()
         {
-              public void actionPerformed(ActionEvent actionEvent) {                  
-                  linkBtnAndLabel();
+              public void actionPerformed(ActionEvent actionEvent) 
+              {                  
+                  ShowEditAgendaDialog();
               }
         };                
-        view.getButton().addActionListener(actionListener);
+        view.getMCMEditButton().addActionListener(EditAgendaButtonListner);
         
         
         printMCMbuttonListner = new ActionListener()
@@ -42,10 +46,10 @@ public class Controller {
         
     }
     
-    private void linkBtnAndLabel()
+    private void ShowEditAgendaDialog()
     {
-        model.incX();                
-        view.setText(Integer.toString(model.getX()));
+       System.out.println("test");
+       String temp=amd.SetRollSubjects();
         
         
     }
