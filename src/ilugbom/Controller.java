@@ -2,6 +2,8 @@ package ilugbom;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
+
 
 public class Controller {
 
@@ -49,7 +51,10 @@ public class Controller {
     private void ShowEditAgendaDialog()
     {
        System.out.println("test");
-       String temp=amd.SetRollSubjects();
+    //   String temp=amd.SetRollSubjects();
+       JFrame frame=new JFrame();
+    //   frame.setSize(600,300);
+       AgendaMinsDialog amd=new AgendaMinsDialog(frame);
         
         
     }

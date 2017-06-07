@@ -1,6 +1,7 @@
 package ilugbom;
 
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.util.prefs.Preferences;
 
@@ -8,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 
 
@@ -68,8 +70,9 @@ public class AgendaMinutesDialog
 		 table.setFont(TNR16);
 		  
 		 table.setRowHeight(20);
-		 table.getColumnModel().getColumn(0).setMaxWidth(120);
-		 table.getColumnModel().getColumn(1).setMaxWidth(120);
+		// table.setSize(500, 200);
+		// table.getColumnModel().getColumn(0).setMaxWidth(120);
+		// table.getColumnModel().getColumn(1).setMaxWidth(120);
 		 
 	
 	     
@@ -105,6 +108,8 @@ public class AgendaMinutesDialog
     {   //LoadPreferences();
     	//show(PrinterName);
 	   // LoadFromString(); 
+		//JScrollPane pane=new JScrollPane(table);
+	//	pane.setPreferredSize(new Dimension(500,200));
 		
 		 Object[] options = {"Save",
 	    "Cancel"};
@@ -173,6 +178,18 @@ public class AgendaMinutesDialog
 		  }
 		} 
 		  
+	  
+	  
+	  
+	  
+	 	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 	
 	}
 /*	
@@ -197,6 +214,43 @@ public class AgendaMinutesDialog
 		}
 	
 /////end of inner class	
+	
+	
+	
+	
+	
+	
+	
+	
+	 public void setJTableColumnsWidth(JTable table, int tablePreferredWidth,
+		        double... percentages) {
+		    double total = 0;
+		    for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
+		        total += percentages[i];
+		    }
+		 
+		    for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
+		        TableColumn column = table.getColumnModel().getColumn(i);
+		        column.setPreferredWidth((int)
+		                (tablePreferredWidth * (percentages[i] / total)));
+		    }
+		}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	*/
 	
