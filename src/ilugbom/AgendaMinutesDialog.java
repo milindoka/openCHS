@@ -49,8 +49,8 @@ public class AgendaMinutesDialog
 
 
 	
-	 Object rows[][] = {  { "", "","" } };
-	 Object cols[] = { "DIV", "ROLL","SUBJETS" };
+	 Object rows[][] = {  { "", "" } };
+	 Object cols[] = { "AGENDA", "MINUTES" };
 
 	      DefaultTableModel model = new DefaultTableModel(rows, cols);
 	    JTable table = new JTable(model);
@@ -61,16 +61,16 @@ public class AgendaMinutesDialog
 	    {
 	    	DefaultTableModel dtm = (DefaultTableModel) table.getModel();
 	    	
-	    	for(int i=0;i<50;i++)
-	        dtm.addRow(new Object[]{"", "",""});	
+	    	for(int i=0;i<20;i++)
+	        dtm.addRow(new Object[]{"", ""});	
 	
 	  // 	 table.setDefaultEditor(Object.class, new MyEditor());
 		 table.setFont(TNR16);
 		  
 		 table.setRowHeight(20);
-		 table.getColumnModel().getColumn(0).setMaxWidth(25);
-		 table.getColumnModel().getColumn(1).setMaxWidth(90);
-		 table.getColumnModel().getColumn(2).setMinWidth(120);
+		 table.getColumnModel().getColumn(0).setMaxWidth(120);
+		 table.getColumnModel().getColumn(1).setMaxWidth(120);
+		 
 	
 	     
 	    
@@ -104,7 +104,7 @@ public class AgendaMinutesDialog
 	public String SetRollSubjects()
     {   //LoadPreferences();
     	//show(PrinterName);
-	    LoadFromString(); 
+	   // LoadFromString(); 
 		
 		 Object[] options = {"Save",
 	    "Cancel"};
@@ -126,7 +126,7 @@ public class AgendaMinutesDialog
         	   ///Above statement takes care of refreshing last focused cell 
         	  
         	 
-        	   SaveToString();   ///Save Roll Subjects to RollSubString
+        //	   SaveToString();   ///Save Roll Subjects to RollSubString
         	
     //    	   SavePreferences(); ///Save RollSubString to disk
         	   
