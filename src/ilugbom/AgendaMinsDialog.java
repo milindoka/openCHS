@@ -2,6 +2,7 @@ package ilugbom;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -10,10 +11,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
 
 public class AgendaMinsDialog extends JDialog 
 {
-	  public AgendaMinsDialog( JFrame parent ) {
+	
+	  public AgendaMinsDialog( JFrame parent ) 
+	  {
 	    super( parent );
 	    this.setTitle( "Add Agenda and Minutes Details..." );
 	    this.setLocationRelativeTo( null );
@@ -25,12 +29,11 @@ public class AgendaMinsDialog extends JDialog
 	    JButton okbutton=new JButton("OK");
 	    JButton cancelbutton=new JButton("Cancel");
 	    btnpanel.add(okbutton);btnpanel.add(cancelbutton);
-	    JTable shortcutKeysTable = getShortcutKeysTable();
-	  //  this.add( shortcutKeysTable, BorderLayout.CENTER );
-	    JScrollPane tpane=new JScrollPane(shortcutKeysTable);
+	    JTable amTable = getamTable();
+	    JScrollPane tpane=new JScrollPane(amTable);
 	    tpane.setPreferredSize(new Dimension( 800, 200) );
 	    this.add(tpane, BorderLayout.CENTER );
-       this.add(btnpanel,BorderLayout.SOUTH);
+        this.add(btnpanel,BorderLayout.SOUTH);
 	    this.pack();
 	    this.setLocationRelativeTo(null);
 	    this.setVisible( true );
@@ -38,29 +41,19 @@ public class AgendaMinsDialog extends JDialog
 	  }
 	  
 
-	  private JTable getShortcutKeysTable() {
-	    JTable shortcutKeysTable;
-
-	    Object rowData[][] = { 
-	    		              { "", "" }, 
-	    		              { "", "" }, 
-	    		              { "", "" },
-	    		              { "", "" },
-	    		              { "", "" }, 
-	    		              { "", "" }, 
-	    		              { "", "" },
-	    		              { "", "" }
-	    		              
-	                         };
-	    Object columnNames[] = { "AGENDA", "MINUTES" };
-
-	    shortcutKeysTable = new JTable(rowData, columnNames);
-
-
-	 //   this.add(scrollPane, BorderLayout.CENTER);
-	  //  this.setSize(500, 550);
-	    
-	    return shortcutKeysTable;
+	  private JTable getamTable()
+	  {
+		  Font LS16=new Font("Liberation Serif", Font.PLAIN, 14);
+			 Object rows[][] = {  { "", "" } };
+			 Object cols[] = { "AGENDA", "MINUTES" };
+			      DefaultTableModel model = new DefaultTableModel(rows, cols);
+			    JTable table = new JTable(model);
+			    	DefaultTableModel dtm = (DefaultTableModel) table.getModel();
+			    	for(int i=0;i<20;i++)
+			        dtm.addRow(new Object[]{"", ""});	
+				 table.setFont(LS16);
+				 table.setRowHeight(20);
+	    return table;
 	  }
 
 	}
