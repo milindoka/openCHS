@@ -3,6 +3,8 @@ package ilugbom;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -16,9 +18,11 @@ import javax.swing.table.DefaultTableModel;
 public class AgendaMinsDialog extends JDialog 
 {
 	
+	 private ActionListener btnoklistner,btncancellistner;
+	
 	  public AgendaMinsDialog( JFrame parent ) 
 	  {
-	    super( parent );
+	    super(parent);
 	    this.setTitle( "Add Agenda and Minutes Details..." );
 	    this.setLocationRelativeTo( null );
 	    this.setModal( true );
@@ -26,8 +30,31 @@ public class AgendaMinsDialog extends JDialog
 	    this.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 	    this.getContentPane().setLayout( new BorderLayout() );
 	    JPanel btnpanel=new JPanel();
+	    
 	    JButton okbutton=new JButton("OK");
+	    btnoklistner = new ActionListener()
+        {
+              public void actionPerformed(ActionEvent actionEvent) 
+              {                  
+                  onokclicked();
+              }
+        };
+	    okbutton.addActionListener(btnoklistner);
+	    
+	    
+	    
 	    JButton cancelbutton=new JButton("Cancel");
+	    btncancellistner = new ActionListener()
+        {
+              public void actionPerformed(ActionEvent actionEvent) 
+              {                  
+                  oncancelclicked();
+              }
+        };
+	    cancelbutton.addActionListener(btncancellistner);
+	    
+	    
+	    
 	    btnpanel.add(okbutton);btnpanel.add(cancelbutton);
 	    JTable amTable = getamTable();
 	    JScrollPane tpane=new JScrollPane(amTable);
@@ -56,4 +83,20 @@ public class AgendaMinsDialog extends JDialog
 	    return table;
 	  }
 
+	  
+	  private void onokclicked()
+	  {
+		  dispose();
+		  
+	  }
+	  
+
+	  private void oncancelclicked()
+	  { 
+		 dispose();
+	
+	  }
+
+	  
+	  
 	}
