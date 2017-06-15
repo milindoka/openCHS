@@ -9,13 +9,12 @@ public class MCM
 	
 	private String   MCMYEAR="16-17";
 	private String Signatures="Mr. Pramod Dhyani#Mr. Jayesh Kelkar#Mr. Dharmesh Panchal#Mr. Kamlesh Patil#Mr. Milind Oka";
-
-public class month
-{  String NoticeDate,MeetingDate,Agenda,Minute,Signatures,LastMeetingDate;
-
-};
+	 private String[] NoticeDate=new String[12];
+	   String[] MeetingDate=new String[12];
+	  private String[] LastMeetingDate= new String[12];
+	  private String[] Agenda=new String[12];
+	  private String[] Minute=new String[12];
 	
-month Month[]=new month[12];
 
 
 public void CreateYearPack(String det)
@@ -23,13 +22,17 @@ public void CreateYearPack(String det)
 	String yy=det.substring(6);
 	String zz=IncrementDate(det,0,0,-1);
     MCMYEAR=zz.substring(6)+"-"+yy;
-    Month[0].NoticeDate="04/04/"+zz.substring(6);
-    for(int i=1;i<12;i++)  Month[i].NoticeDate=IncrementDate(Month[i-1].NoticeDate,0,1,0);
-    for(int i=0;i<12;i++)  Month[i].MeetingDate=IncrementDate(Month[i].NoticeDate,8,0,0);
-    Month[0].LastMeetingDate="12/03/"+zz.substring(6);
-    for(int i=1;i<12;i++)  Month[i].LastMeetingDate=Month[i-1].MeetingDate;
+    System.out.println(MCMYEAR);
+    System.out.println("04/04/"+zz.substring(6));
+    
+    NoticeDate[0]="04/04/"+zz.substring(6);
+    for(int i=1;i<12;i++)  NoticeDate[i]=IncrementDate(NoticeDate[i-1],0,1,0);
+    for(int i=0;i<12;i++)  MeetingDate[i]=IncrementDate(NoticeDate[i],8,0,0);
+    
+    LastMeetingDate[0]="12/03/"+zz.substring(6);
+    for(int i=1;i<12;i++) LastMeetingDate[i]=MeetingDate[i-1];
+ 
 }
-
 
 
 public  String IncrementDate(String det,int NofDays,int NofMonths,int NofYears) //Format dd/MM/yy

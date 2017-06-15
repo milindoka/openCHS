@@ -1,6 +1,8 @@
 package ilugbom;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.JFrame;
 
@@ -50,6 +52,14 @@ public class Controller {
     
     private void ShowEditAgendaDialog()
     {
+    	MCM mcm=new MCM();
+    	 String det = new SimpleDateFormat("dd/MM/yy").format(Calendar.getInstance().getTime());
+		  mcm.CreateYearPack(det);
+		  for(int i=0;i<12;i++) System.out.println(mcm.MeetingDate[i]);
+    	
+    	
+    	
+    	
        System.out.println("test");
     //   String temp=amd.SetRollSubjects();
        JFrame frame=new JFrame();
