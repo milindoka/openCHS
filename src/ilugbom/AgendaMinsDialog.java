@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,6 +30,19 @@ public class AgendaMinsDialog extends JDialog
 	    this.setResizable( false );
 	    this.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 	    this.getContentPane().setLayout( new BorderLayout() );
+	    
+	    JPanel toppanel=new JPanel(new BorderLayout());
+	    
+	    JTextField noticeDatefield=new JTextField(8);
+	    JTextField mitingDatefield=new JTextField(8);
+	    JTextField yearfield=new JTextField(8);
+	    toppanel.add(noticeDatefield,BorderLayout.EAST);
+	    
+	    
+	    JPanel topcenterpanel=new JPanel();
+	    topcenterpanel.add(yearfield);
+	    toppanel.add(topcenterpanel,BorderLayout.CENTER);
+	    toppanel.add(mitingDatefield,BorderLayout.WEST);
 	    JPanel btnpanel=new JPanel();
 	    
 	    JButton okbutton=new JButton("OK");
@@ -59,6 +73,7 @@ public class AgendaMinsDialog extends JDialog
 	    JTable amTable = getamTable();
 	    JScrollPane tpane=new JScrollPane(amTable);
 	    tpane.setPreferredSize(new Dimension( 800, 200) );
+	    this.add(toppanel,BorderLayout.NORTH);
 	    this.add(tpane, BorderLayout.CENTER );
         this.add(btnpanel,BorderLayout.SOUTH);
 	    this.pack();
