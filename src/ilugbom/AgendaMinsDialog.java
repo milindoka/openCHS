@@ -33,17 +33,20 @@ public class AgendaMinsDialog extends JDialog
 	    
 	    JPanel toppanel=new JPanel(new BorderLayout());
 	    
+	    
 	    JTextField noticeDatefield=new JTextField(8);
 	    JTextField mitingDatefield=new JTextField(8);
-	    JTextField yearfield=new JTextField(8);
+	    JButton yearbutton=new JButton("Year : 2016-17");
+	    yearbutton.setMaximumSize(new Dimension(8,8));
 	    toppanel.add(noticeDatefield,BorderLayout.EAST);
 	    
 	    
 	    JPanel topcenterpanel=new JPanel();
-	    topcenterpanel.add(yearfield);
+	    topcenterpanel.add(yearbutton);
 	    toppanel.add(topcenterpanel,BorderLayout.CENTER);
 	    toppanel.add(mitingDatefield,BorderLayout.WEST);
 	    JPanel btnpanel=new JPanel();
+	    
 	    
 	    JButton okbutton=new JButton("OK");
 	    btnoklistner = new ActionListener()
@@ -66,8 +69,7 @@ public class AgendaMinsDialog extends JDialog
               }
         };
 	    cancelbutton.addActionListener(btncancellistner);
-	    
-	    
+	       
 	    
 	    btnpanel.add(okbutton);btnpanel.add(cancelbutton);
 	    JTable amTable = getamTable();
