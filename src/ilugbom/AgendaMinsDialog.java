@@ -18,8 +18,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class AgendaMinsDialog extends JDialog 
 {
-	
-	 private ActionListener btnoklistner,btncancellistner;
+	String ac="╬";
+	 private ActionListener btnoklistner,btncancellistner,btnnextmonthlistner,btnpreviousmonthlistner;
 	
 	  public AgendaMinsDialog( JFrame parent ) 
 	  {
@@ -70,8 +70,31 @@ public class AgendaMinsDialog extends JDialog
         };
 	    cancelbutton.addActionListener(btncancellistner);
 	       
+	    JButton nextmonthbutton=new JButton("Next Month");
+	    btnnextmonthlistner = new ActionListener()
+        {
+              public void actionPerformed(ActionEvent actionEvent) 
+              {                  
+                  onnextmonthclicked();
+              }
+        };
+	    nextmonthbutton.addActionListener(btnnextmonthlistner);
 	    
-	    btnpanel.add(okbutton);btnpanel.add(cancelbutton);
+	    JButton previousmonthbutton=new JButton("Prev Month");
+	    btnpreviousmonthlistner = new ActionListener()
+        {
+              public void actionPerformed(ActionEvent actionEvent) 
+              {                  
+                  onpreviousmonthclicked();
+              }
+        };
+	    previousmonthbutton.addActionListener(btnpreviousmonthlistner);
+	    
+	    
+	    btnpanel.add(previousmonthbutton);
+	    btnpanel.add(okbutton);btnpanel.add(cancelbutton);btnpanel.add(nextmonthbutton);
+	    
+	    
 	    JTable amTable = getamTable();
 	    JScrollPane tpane=new JScrollPane(amTable);
 	    tpane.setPreferredSize(new Dimension( 800, 200) );
@@ -100,6 +123,14 @@ public class AgendaMinsDialog extends JDialog
 	    return table;
 	  }
 
+	
+	  
+	  private void onpreviousmonthclicked()
+	  {
+		  dispose();
+		  
+	  }
+	
 	  
 	  private void onokclicked()
 	  {
@@ -114,6 +145,14 @@ public class AgendaMinsDialog extends JDialog
 	
 	  }
 
+
 	  
+	  
+	  private void onnextmonthclicked()
+	  { 
+
+	
+	  }
+
 	  
 	}
