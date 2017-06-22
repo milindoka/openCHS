@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -19,11 +21,24 @@ import javax.swing.table.DefaultTableModel;
 public class AgendaMinsDialog extends JDialog 
 {
 	String ac="╬";
+	JTextField noticeDatefield=new JTextField(8);
+    JTextField mitingDatefield=new JTextField(8);
+    int MonthIndex=0;
+	
+     MCM mcm=new MCM();	
+	
+	
 	 private ActionListener btnoklistner,btncancellistner,btnnextmonthlistner,btnpreviousmonthlistner;
 	
 	  public AgendaMinsDialog( JFrame parent ) 
 	  {
 	    super(parent);
+	    
+	    
+	    String det = new SimpleDateFormat("dd/MM/yy").format(Calendar.getInstance().getTime());
+		mcm.CreateYearPack(det);
+
+		UpdateFromBase();
 	    this.setTitle( "Add Agenda and Minutes Details..." );
 	    this.setLocationRelativeTo( null );
 	    this.setModal( true );
@@ -34,17 +49,16 @@ public class AgendaMinsDialog extends JDialog
 	    JPanel toppanel=new JPanel(new BorderLayout());
 	    
 	    
-	    JTextField noticeDatefield=new JTextField(8);
-	    JTextField mitingDatefield=new JTextField(8);
+	    
 	    JButton yearbutton=new JButton("Year : 2016-17");
 	    yearbutton.setMaximumSize(new Dimension(8,8));
-	    toppanel.add(noticeDatefield,BorderLayout.EAST);
+	    toppanel.add(noticeDatefield,BorderLayout.WEST);
 	    
 	    
 	    JPanel topcenterpanel=new JPanel();
 	    topcenterpanel.add(yearbutton);
 	    toppanel.add(topcenterpanel,BorderLayout.CENTER);
-	    toppanel.add(mitingDatefield,BorderLayout.WEST);
+	    toppanel.add(mitingDatefield,BorderLayout.EAST);
 	    JPanel btnpanel=new JPanel();
 	    
 	    
@@ -104,6 +118,10 @@ public class AgendaMinsDialog extends JDialog
 	    this.pack();
 	    this.setLocationRelativeTo(null);
 	    this.setVisible( true );
+	
+	    
+	    
+	    
 	    
 	  }
 	  
@@ -127,7 +145,8 @@ public class AgendaMinsDialog extends JDialog
 	  
 	  private void onpreviousmonthclicked()
 	  {
-		  dispose();
+		if(MonthIndex>0) MonthIndex--;
+		UpdateFromBase();
 		  
 	  }
 	
@@ -150,9 +169,44 @@ public class AgendaMinsDialog extends JDialog
 	  
 	  private void onnextmonthclicked()
 	  { 
-
+			if(MonthIndex<11) MonthIndex++;
+			UpdateFromBase();
 	
 	  }
 
+	  
+	  public void UpdateFromBase()
+	    { 
+		  
+		  noticeDatefield.setText(mcm.NoticeDate[MonthIndex]);
+	      mitingDatefield.setText(mcm.MeetingDate[MonthIndex]);
+	    
+	    //  String AgendaLines[],MinuteLines[];
+	   
+	   // for(int i=0;i<MaxPoints;i++) { SetData("",table,i,1); SetData("",table_1,i,1);}
+	    
+	    //AgendaLines=Agenda[MonthIndex].split("#");
+	    //MinuteLines=Minute[MonthIndex].split("#");
+	    //for(int i=0;i<AgendaLines.length;i++) SetData(AgendaLines[i],table,i,1); 
+	    //for(int i=0;i<MinuteLines.length;i++) SetData(MinuteLines[i],table_1,i,1);
+	    //NoticeDateField.getDocument().addDocumentListener(documentListener);
+	    //MeetingDateField.getDocument().addDocumentListener(documentListener);
+	    
+	    /*
+	    table.getModel().addTableModelListener(new TableModelListener() {
+
+	        public void tableChanged(TableModelEvent e) {        }
+	      });
+	      */
+	    
+	    
+	    }
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 	  
 	}

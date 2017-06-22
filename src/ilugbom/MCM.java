@@ -9,8 +9,8 @@ public class MCM
 	
 	private String   MCMYEAR="16-17";
 	private String Signatures="Mr. Pramod Dhyani#Mr. Jayesh Kelkar#Mr. Dharmesh Panchal#Mr. Kamlesh Patil#Mr. Milind Oka";
-	 private String[] NoticeDate=new String[12];
-	   String[] MeetingDate=new String[12];
+	 public String[] NoticeDate=new String[12];
+	 public  String[] MeetingDate=new String[12];
 	  private String[] LastMeetingDate= new String[12];
 	  private String[] Agenda=new String[12];
 	  private String[] Minute=new String[12];
