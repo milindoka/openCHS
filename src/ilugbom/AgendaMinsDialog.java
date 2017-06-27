@@ -23,7 +23,9 @@ public class AgendaMinsDialog extends JDialog
 	String ac="╬";
 	JTextField noticeDatefield=new JTextField(8);
     JTextField mitingDatefield=new JTextField(8);
+    int MaxPoints=20;
     int MonthIndex=0;
+    JTable amTable = getamTable();
 	
      MCM mcm=new MCM();	
 	
@@ -37,8 +39,14 @@ public class AgendaMinsDialog extends JDialog
 	    
 	    String det = new SimpleDateFormat("dd/MM/yy").format(Calendar.getInstance().getTime());
 		mcm.CreateYearPack(det);
-
-		UpdateFromBase();
+        mcm.Agenda[0]="Painting work proposed╬Electrical Work Propsed";
+        mcm.Minute[0]="Painting work proposed╬Electrical Work Propsed";
+		
+        mcm.Agenda[1]="Water work proposed╬Electrical Work decided";
+        mcm.Minute[1]="Water work decided╬Electrical Work decided";
+        
+        
+        UpdateFromBase();
 	    this.setTitle( "Add Agenda and Minutes Details..." );
 	    this.setLocationRelativeTo( null );
 	    this.setModal( true );
@@ -109,7 +117,7 @@ public class AgendaMinsDialog extends JDialog
 	    btnpanel.add(okbutton);btnpanel.add(cancelbutton);btnpanel.add(nextmonthbutton);
 	    
 	    
-	    JTable amTable = getamTable();
+	   
 	    JScrollPane tpane=new JScrollPane(amTable);
 	    tpane.setPreferredSize(new Dimension( 800, 200) );
 	    this.add(toppanel,BorderLayout.NORTH);
@@ -134,14 +142,15 @@ public class AgendaMinsDialog extends JDialog
 			      DefaultTableModel model = new DefaultTableModel(rows, cols);
 			    JTable table = new JTable(model);
 			    	DefaultTableModel dtm = (DefaultTableModel) table.getModel();
-			    	for(int i=0;i<20;i++)
+			    	for(int i=0;i<MaxPoints;i++)
 			        dtm.addRow(new Object[]{"", ""});	
 				 table.setFont(LS16);
 				 table.setRowHeight(20);
 	    return table;
 	  }
 
-	
+	  public void SetData(Object obj, JTable table, int row_index, int col_index)
+	    {  table.getModel().setValueAt(obj,row_index,col_index);  }	
 	  
 	  private void onpreviousmonthclicked()
 	  {
@@ -180,15 +189,16 @@ public class AgendaMinsDialog extends JDialog
 		  
 		  noticeDatefield.setText(mcm.NoticeDate[MonthIndex]);
 	      mitingDatefield.setText(mcm.MeetingDate[MonthIndex]);
+	  //    if(mcm.Agenda.length!=0) 
 	    
-	    //  String AgendaLines[],MinuteLines[];
+	    String AgendaLines[],MinuteLines[];
 	   
-	   // for(int i=0;i<MaxPoints;i++) { SetData("",table,i,1); SetData("",table_1,i,1);}
+	    for(int i=0;i<MaxPoints;i++) { SetData("",amTable,i,0); SetData("",amTable,i,1);}
 	    
-	    //AgendaLines=Agenda[MonthIndex].split("#");
-	    //MinuteLines=Minute[MonthIndex].split("#");
-	    //for(int i=0;i<AgendaLines.length;i++) SetData(AgendaLines[i],table,i,1); 
-	    //for(int i=0;i<MinuteLines.length;i++) SetData(MinuteLines[i],table_1,i,1);
+	    AgendaLines=mcm.Agenda[MonthIndex].split("╬");
+	    MinuteLines=mcm.Minute[MonthIndex].split("╬");
+	    for(int i=0;i<AgendaLines.length;i++) SetData(AgendaLines[i],amTable,i,0); 
+	    for(int i=0;i<MinuteLines.length;i++) SetData(MinuteLines[i],amTable,i,1);
 	    //NoticeDateField.getDocument().addDocumentListener(documentListener);
 	    //MeetingDateField.getDocument().addDocumentListener(documentListener);
 	    
