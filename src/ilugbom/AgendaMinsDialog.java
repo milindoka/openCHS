@@ -39,12 +39,12 @@ public class AgendaMinsDialog extends JDialog
 	    
 	    String det = new SimpleDateFormat("dd/MM/yy").format(Calendar.getInstance().getTime());
 		mcm.CreateYearPack(det);
-        mcm.Agenda[0]="Painting work proposed╬Electrical Work Propsed";
-        mcm.Minute[0]="Painting work proposed╬Electrical Work Propsed";
+        for(int i=0;i<12;i++)
+        { 
 		
-        mcm.Agenda[1]="Water work proposed╬Electrical Work decided";
-        mcm.Minute[1]="Water work decided╬Electrical Work decided";
-        
+		mcm.Agenda[i]="";
+        mcm.Minute[i]="";
+        }
         
         UpdateFromBase();
 	    this.setTitle( "Add Agenda and Minutes Details..." );
@@ -177,12 +177,18 @@ public class AgendaMinsDialog extends JDialog
 	  
 	  
 	  private void onnextmonthclicked()
-	  { 
+	  {     UpdateFromUser();
 			if(MonthIndex<11) MonthIndex++;
 			UpdateFromBase();
 	
 	  }
 
+	  public void UpdateFromUser()
+	  {
+		  mcm.NoticeDate[MonthIndex]=noticeDatefield.getText();
+		  mcm.MeetingDate[MonthIndex]=mitingDatefield.getText();
+		  
+	  }
 	  
 	  public void UpdateFromBase()
 	    { 

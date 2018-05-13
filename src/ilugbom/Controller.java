@@ -11,14 +11,14 @@ public class Controller {
 
     private Model model;
     private View view;
-    private AgendaMinutesDialog amd;
+    private AgendaMinsDialog amd;
     private ActionListener EditAgendaButtonListner,printMCMbuttonListner;
     
     public Controller(Model model, View view){
         this.model = model;
         this.view = view;
        // String path;
-        amd = new AgendaMinutesDialog();
+       // 
      
 	     System.out.println(model.getJarPath()); ///set JAR path in model variable path;
 
@@ -73,7 +73,7 @@ public class Controller {
     {  // System.out.println("tt");
     	SetPrinter ps=new SetPrinter();
         ps.LoadPreferences();
-        if(ps.PrinterName.length()==0) ps.SelectPrinter();
+        if(ps.PrinterName==null) ps.SelectPrinter();
         MCMprint mcmp = new MCMprint();
         mcmp.PrintAllMarklists(ps.PrinterName);
     }

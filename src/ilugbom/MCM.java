@@ -8,7 +8,7 @@ public class MCM
 {
 	
 	private String   MCMYEAR="16-17";
-	private String Signatures="Mr. Pramod Dhyani#Mr. Jayesh Kelkar#Mr. Dharmesh Panchal#Mr. Kamlesh Patil#Mr. Milind Oka";
+	private String Signatures="Mr. Jayesh Kelkar#Mr. Vasudeo Gavande#Mr#Mr. Kamlesh Patil#Mr. Milind Oka";
 	public String[] NoticeDate=new String[12];
 	public  String[] MeetingDate=new String[12];
 	public String[] LastMeetingDate= new String[12];
