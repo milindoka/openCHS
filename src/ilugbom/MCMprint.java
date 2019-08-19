@@ -43,23 +43,15 @@ public class MCMprint implements Printable
 	  private String SocietyName="ADITYA PARK BLDG. NO. 4 CO-OP. HOUSING SOCIETY LTD";
 	  private String SocietyRegNo="{ Regd. # MUM/W-T/HSG/T.C.-9309/ Dt. 01/10/2007 }";
 
-	  String para1="3] Nomination form received from flat no 34, Mrs Supriya Shirkar" +
-	  		" Dhaware was considered in the meeting and approved and " +
-	  		"recorded in nomination register.";
+	  String para1="";
 	
-	  String ag3="3] To approve trnasfers of Flat No. 34 and Flat No. 52.";
-	  
-	  String para2="3] Propsals of transfers of shares of flat no 34," +
-	  		" flat no 52, were considered. Transfer documents submitted by both flat" +
-	  		" owners were complete and in order. Also they had already paid transfer" +
-	  		" fee and transfer premium to the society. Hence their transfers" +
-	  		" were approved. Following are the details of the transfers :";
-
-	  String para3="Flat No 34 : Mr Pramod Vachaspati Dhyani , Mr Vachaspati Ramanarayan Dhyani."; 
-	  String para4="Transferee : Mrs Supriya Shirkar Dhaware.";
-
-	  String para5="Flat no 52 : Dharmesh Dhansukhlal Panchal , Dhansukhlal Ramji Panchal";
-	  String para6="Transferee : Mrs Anitha Ravishankar Nair, Mr Ravishankar Puthur."; 
+	//  String ag3="3] To approve trnasfers of Flat No. 34 and Flat No. 52.";
+	  String ag3="";
+	  String para2="";
+	  String para3="";
+      String para4="";
+	  String para5="";
+	  String para6=""; 
      
 
 	  
@@ -104,7 +96,7 @@ public class MCMprint implements Printable
 		NoticeDate[0]="04/04/"+zz.substring(6);
 	    for(int i=1;i<12;i++) NoticeDate[i]=IncrementDate(NoticeDate[i-1],0,1,0);
 	    for(int i=0;i<12;i++) MeetingDate[i]=IncrementDate(NoticeDate[i],8,0,0);
-	    for(int i=0;i<12;i++) Signatures[i]="Mr. Jayesh Kelkar#Mr. Vasudeo Gavande#Mr#Mr. Kamlesh Patil#Mr. Milind Oka";
+	    for(int i=0;i<12;i++) Signatures[i]="Mr. Jayesh Kelkar#Mr. Vasudeo Gawande#Mr#Mr. Kamlesh Patil#Mr. Milind Oka";
 	    
 	  //  NoticeDateField.setText(NoticeDate[MonthIndex]);
 	  //  MeetingDateField.setText(MeetingDate[MonthIndex]);
